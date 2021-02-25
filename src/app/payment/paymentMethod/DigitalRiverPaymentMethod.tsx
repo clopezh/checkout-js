@@ -2,6 +2,7 @@ import React, { useCallback, useContext, FunctionComponent } from 'react';
 import { Omit } from 'utility-types';
 
 import { connectFormik, ConnectFormikProps } from '../../common/form';
+import { Button } from '../../ui/button';
 import { FormContext } from '../../ui/form';
 import PaymentContext from '../PaymentContext';
 import { PaymentFormValues } from '../PaymentForm';
@@ -28,6 +29,8 @@ const DigitalRiverPaymentMethod: FunctionComponent<DigitalRiverPaymentMethodProp
 
     const paymentContext = useContext(PaymentContext);
     const { setSubmitted } = useContext(FormContext);
+    const [shouldShowVatIdContainer, setShouldShowVatIdContainer] = React.useState(true);
+    const vatContainerId = 'vatId';
 
     const initializeDigitalRiverPayment = useCallback(options => initializePayment({
         ...options,
@@ -65,12 +68,42 @@ const DigitalRiverPaymentMethod: FunctionComponent<DigitalRiverPaymentMethodProp
         onUnhandledError?.(error);
     };
 
-    return <HostedWidgetPaymentMethod
-        { ...rest }
-        containerId="drop-in"
-        initializePayment={ initializeDigitalRiverPayment }
-        onUnhandledError={ onError }
-    />;
+    const vatIdContinueButtonOnClick = () => {
+        setShouldShowVatIdContainer(false);
+    };
+
+    const renderVatIdContainer = () => {
+        return (
+            <div>
+                <p>VAT ID:</p>
+                <br />
+                <input
+                    id={ vatContainerId }
+                    tabIndex={ -2 }
+                />
+                <br />
+                <Button
+                    className="optimizedCheckout-buttonSecondary"
+                    onClick={ vatIdContinueButtonOnClick }
+                    type="button"
+                >
+                    Continue
+                </Button>
+            </div>
+        );
+    };
+
+    return(
+        <div>
+            { shouldShowVatIdContainer && renderVatIdContainer() }
+            { !shouldShowVatIdContainer && <HostedWidgetPaymentMethod
+                { ...rest }
+                containerId="drop-in"
+                initializePayment={ initializeDigitalRiverPayment }
+                onUnhandledError={ onError }
+            /> }
+        </div>
+    );
 };
 
 export default connectFormik(DigitalRiverPaymentMethod);
