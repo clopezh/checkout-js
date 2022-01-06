@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.188.3-alpha.1641488697260](https://github.com/bigcommerce/checkout-js/compare/v1.188.2...v1.188.3-alpha.1641488697260) (2022-01-06)
+
+
+### Features
+
+* **payment:** INT-5331 Remove validation for Amazon Pay and all the time show an specific label ([78ad55a](https://github.com/bigcommerce/checkout-js/commit/78ad55a3fb9cd617bccb54424560ee34fb2445c8))
+
 ### [1.188.2](https://github.com/bigcommerce/checkout-js/compare/v1.188.1...v1.188.2) (2022-01-04)
 
 
