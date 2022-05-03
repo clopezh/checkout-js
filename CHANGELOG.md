@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.210.2-alpha.1651604225235](https://github.com/bigcommerce/checkout-js/compare/v1.210.1...v1.210.2-alpha.1651604225235) (2022-05-03)
+
+
+### Features
+
+* **payment:** INT-5904 Remove formatting for payment method when Mollie ([0eda531](https://github.com/bigcommerce/checkout-js/commit/0eda5310e880ba1b1b83b4d192425bec2c4549de))
+
 ### [1.210.1](https://github.com/bigcommerce/checkout-js/compare/v1.210.0...v1.210.1) (2022-05-02)
 
 
