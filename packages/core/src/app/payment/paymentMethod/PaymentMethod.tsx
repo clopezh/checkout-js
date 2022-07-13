@@ -84,6 +84,10 @@ const PaymentMethodComponent: FunctionComponent<PaymentMethodProps & WithCheckou
     }
 
     if (method.id === PaymentMethodId.ApplePay) {
+        if (method.gateway === PaymentMethodId.Mollie) {
+            return <MolliePaymentMethod { ...props } />;
+        }
+
         return <ApplePayPaymentMethod { ...props } />;
     }
 
