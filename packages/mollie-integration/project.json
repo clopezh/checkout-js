@@ -5,9 +5,13 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/mollie-integration/**/*.{ts,tsx}"]
+        "lintFilePatterns": [
+          "packages/mollie-integration/**/*.ts"
+        ]
       }
     },
     "test": {
@@ -16,9 +20,10 @@
         "coverage/packages/mollie-integration"
       ],
       "options": {
-        "jestConfig": "packages/mollie-integration/jest.config.js"
+        "jestConfig": "packages/mollie-integration/jest.config.js",
+        "passWithNoTests": true
       }
     }
   },
-  "tags": ["scope:integration"]
+  "tags": []
 }

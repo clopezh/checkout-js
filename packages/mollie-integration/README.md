@@ -1,4 +1,4 @@
-# Mollie Integration
+# mollie-integration
 
 This library was generated with [Nx](https://nx.dev).
 

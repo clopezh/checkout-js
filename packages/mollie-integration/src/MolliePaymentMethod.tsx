@@ -1,11 +1,11 @@
 import { CardInstrument, PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
-import { toResolvableComponent, PaymentMethodResolveId } from '@bigcommerce/checkout/payment-integration-api';
-import React, { FunctionComponent, useCallback, useContext } from 'react';
+import { FunctionComponent, useCallback, useContext } from 'react';
 import LocaleContext from '../../core/src/app/locale/LocaleContext';
 import { WithInjectedHostedCreditCardFieldsetProps } from '../../core/src/app/payment/hostedCreditCard';
 import PaymentContext from '../../core/src/app/payment/PaymentContext';
 import HostedWidgetPaymentMethod, { HostedWidgetPaymentMethodProps } from '../../core/src/app/payment/paymentMethod/HostedWidgetPaymentMethod';
 import MollieCustomCardForm from '../../core/src/app/payment/paymentMethod/MollieCustomCardForm';
+import { PaymentMethodResolveId, toResolvableComponent } from '../../payment-integration-api/src';
 
 export type MolliePaymentMethodsProps = Omit<HostedWidgetPaymentMethodProps, 'containerId'>;
 

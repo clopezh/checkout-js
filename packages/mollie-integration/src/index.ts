@@ -1,1 +1,1 @@
-export { default as MolliePaymentMethod } from './MolliePaymentMethod';
+export * from './lib/mollie-integration';
