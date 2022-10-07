@@ -7,7 +7,8 @@ import { PaymentFormValues } from '@bigcommerce/checkout/payment-integration-api
 import { CustomError } from '../../common/error';
 import { connectFormik, ConnectFormikProps } from '../../common/form';
 import { withLanguage, WithLanguageProps } from '../../locale';
-import { FormContext } from '../../ui/form';
+import { CheckboxInput, FormContext } from '../../ui/form';
+import PaymentContext from '../PaymentContext';
 
 import HostedDropInPaymentMethod from './HostedDropInPaymentMethod';
 import { HostedWidgetPaymentMethodProps } from './HostedWidgetPaymentMethod';
@@ -23,12 +24,20 @@ const DigitalRiverPaymentMethod: FunctionComponent<
     DigitalRiverPaymentMethodProps & WithLanguageProps
 > = ({ initializePayment, language, onUnhandledError = noop, formik: { submitForm }, ...rest }) => {
     const { setSubmitted } = useContext(FormContext);
+    const paymentContext = useContext(PaymentContext);
     const containerId = `${rest.method.id}-component-field`;
     const isVaultingEnabled = rest.method.config.isVaultingEnabled;
+    const [checkedCheckbox, setCheckedCheckbox] = React.useState<boolean>(false);
 
     const initializeDigitalRiverPayment = useCallback(
-        (options) =>
-            initializePayment({
+        (options) => {
+            if (options.selectedInstrumentId) {
+                if (paymentContext) {
+                    paymentContext.disableSubmit(options.method, true)
+                }
+            }
+
+            return initializePayment({
                 ...options,
                 digitalriver: {
                     containerId,
@@ -55,8 +64,8 @@ const DigitalRiverPaymentMethod: FunctionComponent<
                         );
                     },
                 },
-            }),
-        [
+            })
+        } , [
             initializePayment,
             containerId,
             isVaultingEnabled,
@@ -80,7 +89,15 @@ const DigitalRiverPaymentMethod: FunctionComponent<
         onUnhandledError(error);
     };
 
-    return (
+    const handleCheckboxChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setCheckedCheckbox(event.target.checked);
+
+        if (paymentContext) {
+            paymentContext.disableSubmit(rest.method, !event.target.checked)
+        }
+    }, [rest]);
+
+    return (<>
         <HostedDropInPaymentMethod
             {...rest}
             containerId={containerId}
@@ -88,7 +105,15 @@ const DigitalRiverPaymentMethod: FunctionComponent<
             initializePayment={initializeDigitalRiverPayment}
             onUnhandledError={onError}
         />
-    );
+        <CheckboxInput
+            id='complianceDRCheckbox'
+            label='Accept compliance'
+            name='complianceDRCheckbox'
+            onChange={handleCheckboxChange}
+            value={'Accept Compliance'}
+            checked={checkedCheckbox}
+        />
+    </>);
 };
 
 export default connectFormik(withLanguage(DigitalRiverPaymentMethod));
