@@ -1,9 +1,12 @@
 import { CardInstrument, PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
+import {
+    PaymentMethodResolveId,
+    toResolvableComponent
+} from '@bigcommerce/checkout/payment-integration-api';
 import React, { FunctionComponent, useCallback, useContext } from 'react';
 
 import { LocaleContext } from '../../locale';
 import {
-    withHostedCreditCardFieldset,
     WithInjectedHostedCreditCardFieldsetProps,
 } from '../hostedCreditCard';
 import PaymentContext from '../PaymentContext';
@@ -132,4 +135,10 @@ const MolliePaymentMethod: FunctionComponent<
     );
 };
 
-export default withHostedCreditCardFieldset(MolliePaymentMethod);
+export default toResolvableComponent<MolliePaymentMethodsProps & WithInjectedHostedCreditCardFieldsetProps, PaymentMethodResolveId>(
+    MolliePaymentMethod,
+    [
+        { gateway: 'mollie' },
+        { id: 'applepay', gateway: 'mollie' }
+    ],
+);

@@ -30,7 +30,6 @@ import HostedPaymentMethod from './HostedPaymentMethod';
 import KlarnaPaymentMethod from './KlarnaPaymentMethod';
 import KlarnaV2PaymentMethod from './KlarnaV2PaymentMethod';
 import MasterpassPaymentMethod from './MasterpassPaymentMethod';
-import MolliePaymentMethod from './MolliePaymentMethod';
 import MonerisPaymentMethod from './MonerisPaymentMethod';
 import OfflinePaymentMethod from './OfflinePaymentMethod';
 import OpyPaymentMethod from './OpyPaymentMethod';
@@ -255,9 +254,9 @@ const PaymentMethodComponent: FunctionComponent<
         return <OpyPaymentMethod {...props} />;
     }
 
-    if (method.gateway === PaymentMethodId.Mollie) {
-        return <MolliePaymentMethod {...props} />;
-    }
+    // if (method.gateway === PaymentMethodId.Mollie) {
+    //     return <MolliePaymentMethod {...props} />;
+    // }
 
     // NOTE: Some payment methods have `method` as `credit-card` but they are
     // actually not. Therefore, as a workaround, we are doing the following
