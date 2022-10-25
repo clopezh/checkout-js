@@ -1,14 +1,12 @@
 import { CardInstrument, PaymentInitializeOptions } from '@bigcommerce/checkout-sdk';
 import {
+    PaymentMethodProps,
     PaymentMethodResolveId,
     toResolvableComponent
 } from '@bigcommerce/checkout/payment-integration-api';
 import React, { FunctionComponent, useCallback, useContext } from 'react';
 
 import { LocaleContext } from '../../locale';
-import {
-    WithInjectedHostedCreditCardFieldsetProps,
-} from '../hostedCreditCard';
 import PaymentContext from '../PaymentContext';
 
 import HostedWidgetPaymentMethod, {
@@ -22,10 +20,8 @@ export enum MolliePaymentMethodType {
     creditcard = 'credit_card',
 }
 
-const MolliePaymentMethod: FunctionComponent<
-    MolliePaymentMethodsProps & WithInjectedHostedCreditCardFieldsetProps
-> = ({
-    initializePayment,
+const MolliePaymentMethod: FunctionComponent<PaymentMethodProps> = ({
+    checkoutService,
     method,
     getHostedFormOptions,
     getHostedStoredCardValidationFieldset,
@@ -40,7 +36,7 @@ const MolliePaymentMethod: FunctionComponent<
             async (options: PaymentInitializeOptions, selectedInstrument) => {
                 const mollieElements = getMolliesElementOptions();
 
-                return initializePayment({
+                return checkoutService.initializePayment({
                     ...options,
                     mollie: {
                         containerId,
@@ -77,7 +73,7 @@ const MolliePaymentMethod: FunctionComponent<
                 });
             },
             [
-                initializePayment,
+                checkoutService,
                 containerId,
                 getHostedFormOptions,
                 paymentContext,
@@ -122,6 +118,7 @@ const MolliePaymentMethod: FunctionComponent<
     return (
         <HostedWidgetPaymentMethod
             {...props}
+            deinitializePayment={checkoutService.deinitializePayment}
             containerId={containerId}
             hideContentWhenSignedOut
             initializePayment={initializeMolliePayment}
@@ -135,7 +132,7 @@ const MolliePaymentMethod: FunctionComponent<
     );
 };
 
-export default toResolvableComponent<MolliePaymentMethodsProps & WithInjectedHostedCreditCardFieldsetProps, PaymentMethodResolveId>(
+export default toResolvableComponent<PaymentMethodProps, PaymentMethodResolveId>(
     MolliePaymentMethod,
     [
         { gateway: 'mollie' },

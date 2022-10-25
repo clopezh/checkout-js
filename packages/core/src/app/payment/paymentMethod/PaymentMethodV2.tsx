@@ -12,6 +12,7 @@ import { connectFormik, WithFormikProps } from '../../common/form';
 import { withLanguage, WithLanguageProps } from '../../locale';
 import { withForm, WithFormProps } from '../../ui/form';
 import createPaymentFormService from '../createPaymentFormService';
+import { withHostedCreditCardFieldset, WithInjectedHostedCreditCardFieldsetProps } from '../hostedCreditCard';
 import resolvePaymentMethod from '../resolvePaymentMethod';
 import withPayment, { WithPaymentProps } from '../withPayment';
 
@@ -29,6 +30,7 @@ export interface PaymentMethodProps {
 
 const PaymentMethodContainer: ComponentType<
     PaymentMethodProps &
+        WithInjectedHostedCreditCardFieldsetProps &
         WithCheckoutProps &
         WithLanguageProps &
         WithPaymentProps &
@@ -50,6 +52,11 @@ const PaymentMethodContainer: ComponentType<
     setSubmit,
     setSubmitted,
     setValidationSchema,
+    getHostedFormOptions,
+    getHostedStoredCardValidationFieldset,
+    hostedStoredCardValidationSchema,
+    hostedFieldset,
+    hostedValidationSchema
 }) => {
     const formContext = {
         isSubmitted,
@@ -88,10 +95,15 @@ const PaymentMethodContainer: ComponentType<
             method={method}
             onUnhandledError={onUnhandledError}
             paymentForm={createPaymentFormService(formikContext, formContext, paymentContext)}
+            getHostedStoredCardValidationFieldset={getHostedStoredCardValidationFieldset}
+            getHostedFormOptions={getHostedFormOptions}
+            hostedStoredCardValidationSchema={hostedStoredCardValidationSchema}
+            hostedFieldset={hostedFieldset}
+            hostedValidationSchema={hostedValidationSchema}
         />
     );
 };
 
 export default withCheckout((props) => props)(
-    withLanguage(withPayment(withForm(connectFormik(PaymentMethodContainer)))),
-) as ComponentType<PaymentMethodProps>;
+    withHostedCreditCardFieldset(withLanguage(withPayment(withForm(connectFormik(PaymentMethodContainer))))),
+) as ComponentType<PaymentMethodProps & WithInjectedHostedCreditCardFieldsetProps>;
