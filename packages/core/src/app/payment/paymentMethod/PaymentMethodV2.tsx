@@ -69,7 +69,7 @@ const PaymentMethodContainer: ComponentType<
         type: method.type,
     });
 
-    if (!ResolvedPaymentMethod) {
+    if (!ResolvedPaymentMethod || method.gateway == 'mollie') {
         return (
             <PaymentMethodV1
                 isEmbedded={isEmbedded}
