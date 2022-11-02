@@ -35,7 +35,7 @@
   "prettier": "@bigcommerce/eslint-config/prettier",
   "homepage": "https://github.com/bigcommerce/checkout-js#readme",
   "dependencies": {
-    "@bigcommerce/checkout-sdk": "^1.300.0",
+    "@bigcommerce/checkout-sdk": "git@github.com:clopezh/checkout-sdk-js.git#v1.300.1-alpha.18e4160aeb0bd3b1798919f0dbcd488be0444438",
     "@bigcommerce/citadel": "^2.15.1",
     "@bigcommerce/form-poster": "^1.2.2",
     "@bigcommerce/memoize": "^1.0.0",
